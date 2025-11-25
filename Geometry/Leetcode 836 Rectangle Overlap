@@ -1,0 +1,36 @@
+class Solution {
+    public boolean isRectangleOverlap(int[] rec1, int[] rec2) {
+        int first_rectangle[][]=new int[4][2];
+        int second_rectangle[][]=new int[4][2];
+
+        //index 0 - bottom-left corner
+        //index 1 - bottom-right corner
+        //index 2 - top-right corner
+        //index 3 - top-left corner
+
+        fillRectangle(first_rectangle,rec1[0],rec1[1],rec1[2],rec1[3]);
+        fillRectangle(second_rectangle,rec2[0],rec2[1],rec2[2],rec2[3]);
+
+        int x_range[]={0,0};
+        int y_range[]={0,0};
+
+        x_range[0]=Math.max(first_rectangle[0][0],second_rectangle[0][0]);
+        x_range[1]=Math.min(first_rectangle[1][0],second_rectangle[1][0]);
+
+        y_range[0]=Math.max(first_rectangle[0][1],second_rectangle[0][1]);
+        y_range[1]=Math.min(first_rectangle[3][1],second_rectangle[3][1]);
+
+        int length=Math.abs(x_range[0]-x_range[1]);
+        int breadth=Math.abs(y_range[0]-y_range[1]);
+
+        if(x_range[0]>=x_range[1] || y_range[0]>=y_range[1])return false;
+
+        return true;
+    }
+    void fillRectangle(int rectangle[][],int blx,int bly,int trx,int trya){
+        rectangle[0][0]=blx;rectangle[0][1]=bly;
+        rectangle[2][0]=trx;rectangle[2][1]=trya;
+        rectangle[1][0]=trx;rectangle[1][1]=bly;
+        rectangle[3][0]=blx;rectangle[3][1]=trya;
+    }
+}
