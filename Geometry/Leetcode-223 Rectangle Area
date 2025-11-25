@@ -1,0 +1,44 @@
+class Solution {
+    public int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int first_rectangle[][]=new int[4][2];
+        int second_rectangle[][]=new int[4][2];
+
+        //index 0 - bottom-left corner
+        //index 1 - bottom-right corner
+        //index 2 - top-right corner
+        //index 3 - top-left corner
+
+        fillRectangle(first_rectangle,ax1,ay1,ax2,ay2);
+        fillRectangle(second_rectangle,bx1,by1,bx2,by2);
+
+        int x_range[]={0,0};
+        int y_range[]={0,0};
+
+        x_range[0]=Math.max(first_rectangle[0][0],second_rectangle[0][0]);
+        x_range[1]=Math.min(first_rectangle[1][0],second_rectangle[1][0]);
+
+        y_range[0]=Math.max(first_rectangle[0][1],second_rectangle[0][1]);
+        y_range[1]=Math.min(first_rectangle[3][1],second_rectangle[3][1]);
+
+        int length=Math.abs(x_range[0]-x_range[1]);
+        int breadth=Math.abs(y_range[0]-y_range[1]);
+
+        int intersection_area=length*breadth;
+
+        if(x_range[0]>x_range[1] || y_range[0]>y_range[1])intersection_area=0;
+
+        int fr_length=Math.abs(first_rectangle[0][0]-first_rectangle[1][0]);
+        int fr_breadth=Math.abs(first_rectangle[0][1]-first_rectangle[3][1]);
+
+        int sr_length=Math.abs(second_rectangle[0][0]-second_rectangle[1][0]);
+        int sr_breadth=Math.abs(second_rectangle[0][1]-second_rectangle[3][1]);
+
+        return fr_length*fr_breadth+sr_length*sr_breadth-intersection_area;
+    }
+    void fillRectangle(int rectangle[][],int blx,int bly,int trx,int trya){
+        rectangle[0][0]=blx;rectangle[0][1]=bly;
+        rectangle[2][0]=trx;rectangle[2][1]=trya;
+        rectangle[1][0]=trx;rectangle[1][1]=bly;
+        rectangle[3][0]=blx;rectangle[3][1]=trya;
+    }
+}
